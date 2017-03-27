@@ -19,7 +19,11 @@ function addPlugins (obj, i) {
     })
   ];
   if (i === 1) {
-    obj.plugins.splice(2, 0, new webpack.optimize.UglifyJsPlugin({
+    obj.optimization = {
+      minimize: true
+    };
+    /*
+    {
       compress: {
         warnings: false
       },
@@ -27,7 +31,8 @@ function addPlugins (obj, i) {
         comments: false
       },
       sourceMap: true
-    }));
+    }
+    */
   }
   return obj;
 }
@@ -40,7 +45,7 @@ const cfg = {
         test: /\.js$/,
         loader: 'babel-loader',
         options: {
-          presets: [['es2015', {'modules': false}]]
+          presets: [['@babel/env', {'modules': false}]]
         },
         exclude: /node_modules/
       }

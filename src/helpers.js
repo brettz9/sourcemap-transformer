@@ -1,5 +1,6 @@
-import fs from 'fs';
+// import can't currently be properly browserified: https://github.com/babel/babelify/issues/81
 import path from 'path';
+var fs = require('fs'); // eslint-disable-line no-var
 
 function fileStr (filePath) {
   return fs.readFileSync(filePath).toString();
@@ -8,7 +9,7 @@ function fileStr (filePath) {
 function decodeInlineSourceMap (inlineSourceMap) {
   const encoding = /^(?:;charset=utf-8)?;base64,/;
   if (encoding.test(inlineSourceMap)) {
-    const buffer = new Buffer(inlineSourceMap.slice(inlineSourceMap.match(encoding)[0].length), 'base64');
+    const buffer = Buffer.from(inlineSourceMap.slice(inlineSourceMap.match(encoding)[0].length), 'base64');
     return buffer.toString();
   }
   return decodeURIComponent(inlineSourceMap);
