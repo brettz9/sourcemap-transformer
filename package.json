@@ -5,7 +5,9 @@
   "main": "dist/sourcemap-transformer.min.js",
   "scripts": {
     "build": "$(npm bin)/webpack",
-    "eslint": "eslint webpack.config.js src/"
+    "eslint": "eslint webpack.config.js src/",
+    "btest": "browserify-test --t [ babelify --presets es2015 ] --testemOptions '{\"launch_in_dev\": [\"Node\"], \"launchers\": {\"Node\": {\"command\": \"mocha test/ --compilers js:babel-register\"}}}' --watch test/*",
+    "test": "npm run eslint && npm run build && npm run btest"
   },
   "repository": {
     "type": "git",
@@ -27,11 +29,18 @@
   "devDependencies": {
     "babel-core": "6.24.0",
     "babel-loader": "6.4.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
     "babel-preset-es2015": "6.24.0",
+    "babelify": "7.3.0",
+    "browserify-test": "3.1.0",
+    "chai": "3.5.0",
     "eslint": "3.18.0",
     "eslint-config-standard": "7.1.0",
     "eslint-plugin-promise": "3.5.0",
     "eslint-plugin-standard": "2.1.1",
+    "mocha": "3.2.0",
+    "stream-to-string": "^1.1.0",
+    "string-to-stream": "^1.1.0",
     "webpack": "2.3.2"
   },
   "dependencies": {

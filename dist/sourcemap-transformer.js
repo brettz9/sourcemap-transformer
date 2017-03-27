@@ -1167,21 +1167,24 @@ exports.SourceMapGenerator = SourceMapGenerator;
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return defaultNewFileRegex; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return defaultPrevFileRegex; });
-/* harmony export (immutable) */ __webpack_exports__["c"] = defaultNewFileFormattingSpaces;
-/* harmony export (immutable) */ __webpack_exports__["d"] = defaultNewFilePath;
-/* harmony export (immutable) */ __webpack_exports__["e"] = defaultNewFileLineNumber;
-/* harmony export (immutable) */ __webpack_exports__["f"] = defaultNewFileColumnNumber;
-/* harmony export (immutable) */ __webpack_exports__["g"] = defaultPrevFileFormattingSpaces;
-/* harmony export (immutable) */ __webpack_exports__["h"] = defaultPrevFileLineNumber;
-/* harmony export (immutable) */ __webpack_exports__["i"] = defaultPrevFileColumnNumber;
-/* harmony export (immutable) */ __webpack_exports__["j"] = defaultOriginalPositionString;
-var defaultNewFileRegex = /^(\s*)at file:\/\/(.+):(\d+)/;
-var defaultPrevFileRegex = /^(\s*)at.*:(\d+)/;
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.defaultNewFileFormattingSpaces = defaultNewFileFormattingSpaces;
+exports.defaultNewFilePath = defaultNewFilePath;
+exports.defaultNewFileLineNumber = defaultNewFileLineNumber;
+exports.defaultNewFileColumnNumber = defaultNewFileColumnNumber;
+exports.defaultPrevFileFormattingSpaces = defaultPrevFileFormattingSpaces;
+exports.defaultPrevFileLineNumber = defaultPrevFileLineNumber;
+exports.defaultPrevFileColumnNumber = defaultPrevFileColumnNumber;
+exports.defaultOriginalPositionString = defaultOriginalPositionString;
+var defaultNewFileRegex = exports.defaultNewFileRegex = /^(\s*)at file:\/\/(.+):(\d+)/;
+var defaultPrevFileRegex = exports.defaultPrevFileRegex = /^(\s*)at.*:(\d+)/;
 
 function defaultNewFileFormattingSpaces(match) {
   return match[1] || '';
@@ -1220,19 +1223,28 @@ function defaultOriginalPositionString(formattingSpaces, originalPosition, untra
 
 /***/ }),
 /* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_path__);
-/* harmony export (immutable) */ __webpack_exports__["a"] = getRawSourceMap;
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getRawSourceMap = getRawSourceMap;
+
+var _path = __webpack_require__(16);
+
+var _path2 = _interopRequireDefault(_path);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import can't currently be properly browserified: https://github.com/babel/babelify/issues/81
+var fs = __webpack_require__(15); // eslint-disable-line no-var
 
 
 function fileStr(filePath) {
-  return __WEBPACK_IMPORTED_MODULE_0_fs___default.a.readFileSync(filePath).toString();
+  return fs.readFileSync(filePath).toString();
 }
 
 function decodeInlineSourceMap(inlineSourceMap) {
@@ -1260,7 +1272,7 @@ function getRawSourceMap(filePath) {
   } else if (/^data:application\/json/.test(sourceMapUrl)) {
     rawSourceMap = decodeInlineSourceMap(sourceMapUrl.slice('data:application/json'.length));
   } else {
-    rawSourceMap = fileStr(__WEBPACK_IMPORTED_MODULE_1_path___default.a.resolve(__WEBPACK_IMPORTED_MODULE_1_path___default.a.dirname(filePath), sourceMapUrl));
+    rawSourceMap = fileStr(_path2.default.resolve(_path2.default.dirname(filePath), sourceMapUrl));
   }
 
   return JSON.parse(rawSourceMap);
@@ -1288,23 +1300,29 @@ module.exports = require("stream");
 
 /***/ }),
 /* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_stream__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_stream___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_stream__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_source_map__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_source_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_source_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__defaultConfig__ = __webpack_require__(4);
-/* harmony export (immutable) */ __webpack_exports__["emptyCache"] = emptyCache;
-/* harmony export (immutable) */ __webpack_exports__["transformSourceMapString"] = transformSourceMapString;
-/* harmony export (immutable) */ __webpack_exports__["createSourceMapTransformer"] = createSourceMapTransformer;
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.emptyCache = emptyCache;
+exports.transformSourceMapString = transformSourceMapString;
+exports.createSourceMapTransformer = createSourceMapTransformer;
 
+var _stream = __webpack_require__(7);
 
+var _stream2 = _interopRequireDefault(_stream);
+
+var _sourceMap = __webpack_require__(6);
+
+var _helpers = __webpack_require__(5);
+
+var _defaultConfig = __webpack_require__(4);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var smcCache = {};
 
@@ -1315,25 +1333,25 @@ function emptyCache() {
 function transformSourceMapString(sourceMapString) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
       _ref$newFileRegex = _ref.newFileRegex,
-      newFileRegex = _ref$newFileRegex === undefined ? __WEBPACK_IMPORTED_MODULE_3__defaultConfig__["a" /* defaultNewFileRegex */] : _ref$newFileRegex,
+      newFileRegex = _ref$newFileRegex === undefined ? _defaultConfig.defaultNewFileRegex : _ref$newFileRegex,
       _ref$prevFileRegex = _ref.prevFileRegex,
-      prevFileRegex = _ref$prevFileRegex === undefined ? __WEBPACK_IMPORTED_MODULE_3__defaultConfig__["b" /* defaultPrevFileRegex */] : _ref$prevFileRegex,
+      prevFileRegex = _ref$prevFileRegex === undefined ? _defaultConfig.defaultPrevFileRegex : _ref$prevFileRegex,
       _ref$newFileFormattin = _ref.newFileFormattingSpaces,
-      newFileFormattingSpaces = _ref$newFileFormattin === undefined ? __WEBPACK_IMPORTED_MODULE_3__defaultConfig__["c" /* defaultNewFileFormattingSpaces */] : _ref$newFileFormattin,
+      newFileFormattingSpaces = _ref$newFileFormattin === undefined ? _defaultConfig.defaultNewFileFormattingSpaces : _ref$newFileFormattin,
       _ref$newFilePath = _ref.newFilePath,
-      newFilePath = _ref$newFilePath === undefined ? __WEBPACK_IMPORTED_MODULE_3__defaultConfig__["d" /* defaultNewFilePath */] : _ref$newFilePath,
+      newFilePath = _ref$newFilePath === undefined ? _defaultConfig.defaultNewFilePath : _ref$newFilePath,
       _ref$newFileLineNumbe = _ref.newFileLineNumber,
-      newFileLineNumber = _ref$newFileLineNumbe === undefined ? __WEBPACK_IMPORTED_MODULE_3__defaultConfig__["e" /* defaultNewFileLineNumber */] : _ref$newFileLineNumbe,
+      newFileLineNumber = _ref$newFileLineNumbe === undefined ? _defaultConfig.defaultNewFileLineNumber : _ref$newFileLineNumbe,
       _ref$newFileColumnNum = _ref.newFileColumnNumber,
-      newFileColumnNumber = _ref$newFileColumnNum === undefined ? __WEBPACK_IMPORTED_MODULE_3__defaultConfig__["f" /* defaultNewFileColumnNumber */] : _ref$newFileColumnNum,
+      newFileColumnNumber = _ref$newFileColumnNum === undefined ? _defaultConfig.defaultNewFileColumnNumber : _ref$newFileColumnNum,
       _ref$prevFileFormatti = _ref.prevFileFormattingSpaces,
-      prevFileFormattingSpaces = _ref$prevFileFormatti === undefined ? __WEBPACK_IMPORTED_MODULE_3__defaultConfig__["g" /* defaultPrevFileFormattingSpaces */] : _ref$prevFileFormatti,
+      prevFileFormattingSpaces = _ref$prevFileFormatti === undefined ? _defaultConfig.defaultPrevFileFormattingSpaces : _ref$prevFileFormatti,
       _ref$prevFileLineNumb = _ref.prevFileLineNumber,
-      prevFileLineNumber = _ref$prevFileLineNumb === undefined ? __WEBPACK_IMPORTED_MODULE_3__defaultConfig__["h" /* defaultPrevFileLineNumber */] : _ref$prevFileLineNumb,
+      prevFileLineNumber = _ref$prevFileLineNumb === undefined ? _defaultConfig.defaultPrevFileLineNumber : _ref$prevFileLineNumb,
       _ref$prevFileColumnNu = _ref.prevFileColumnNumber,
-      prevFileColumnNumber = _ref$prevFileColumnNu === undefined ? __WEBPACK_IMPORTED_MODULE_3__defaultConfig__["i" /* defaultPrevFileColumnNumber */] : _ref$prevFileColumnNu,
+      prevFileColumnNumber = _ref$prevFileColumnNu === undefined ? _defaultConfig.defaultPrevFileColumnNumber : _ref$prevFileColumnNu,
       _ref$originalPosition = _ref.originalPositionString,
-      originalPositionString = _ref$originalPosition === undefined ? __WEBPACK_IMPORTED_MODULE_3__defaultConfig__["j" /* defaultOriginalPositionString */] : _ref$originalPosition,
+      originalPositionString = _ref$originalPosition === undefined ? _defaultConfig.defaultOriginalPositionString : _ref$originalPosition,
       _ref$cache = _ref.cache,
       cache = _ref$cache === undefined ? true : _ref$cache;
 
@@ -1348,8 +1366,8 @@ function transformSourceMapString(sourceMapString) {
 
       try {
         if (!smcCache[filePath] || !cache) {
-          var rawSourceMap = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__helpers__["a" /* getRawSourceMap */])(filePath); // May throw if no map found
-          lastSmc = new __WEBPACK_IMPORTED_MODULE_1_source_map__["SourceMapConsumer"](rawSourceMap);
+          var rawSourceMap = (0, _helpers.getRawSourceMap)(filePath); // May throw if no map found
+          lastSmc = new _sourceMap.SourceMapConsumer(rawSourceMap);
           smcCache[filePath] = lastSmc;
         } else {
           lastSmc = smcCache[filePath];
@@ -1382,7 +1400,7 @@ function transformSourceMapString(sourceMapString) {
 function createSourceMapTransformer() {
   var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-  var sourceMapTransformer = new __WEBPACK_IMPORTED_MODULE_0_stream___default.a.Transform({ objectMode: true });
+  var sourceMapTransformer = new _stream2.default.Transform({ objectMode: true });
   sourceMapTransformer._transform = function (chunk, something, done) {
     var transformedChunk = transformSourceMapString(chunk.toString(), opts);
     this.push(transformedChunk);
