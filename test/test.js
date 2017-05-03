@@ -1,13 +1,26 @@
 /* eslint-env mocha */
-import { expect } from 'chai';
+// import { expect } from 'chai';
 import { createSourceMapTransformer } from '../src';
-import stringToStream from 'string-to-stream';
 import streamToString from 'stream-to-string';
+import browserify from 'browserify';
+// import browserifyTest from 'browserify-test';
+
+import path from 'path';
+import util from 'util';
+
+import Mocha from 'mocha';
+import {Readable} from 'stream';
+import v8Transformers from './v8Transformers';
+
+// import can't currently be properly browserified: https://github.com/babel/babelify/issues/81
+const fs = require('fs');
 
 describe('sourcemap-transformer', () => {
   describe('Examples', () => {
     it('Transforms a file', (done) => {
-      const input = `1) App renders:
+        /*
+        import stringToStream from 'string-to-stream';
+        const input = `1) App renders:
        AssertionError: expected 1 to equal 2
         at file:///tmp/testBundle.js:15315
         at file:///tmp/testBundle.js:17432
@@ -21,7 +34,9 @@ describe('sourcemap-transformer', () => {
         at next (:4523)
         at :4559
         at timeslice (:12326)
-  `;
+        `;
+        stringToStream(input)
+
       const expected = `1) App renders:
      AssertionError: expected 1 to equal 2
       webpack:///~/chai/lib/chai/assertion.js:111
@@ -37,12 +52,32 @@ describe('sourcemap-transformer', () => {
       webpack:///~/sinon/lib/sinon/spy.js:25
       at timeslice (:12326)
 `;
+*/
 
-      const sourceMapTransformer = createSourceMapTransformer();
+      const sourceMapTransformer = createSourceMapTransformer(v8Transformers);
 
-      streamToString(stringToStream(input).pipe(sourceMapTransformer)).then((output) => {
-        expect(output).to.equal(expected);
-        done();
+      const mocha = new Mocha();
+      const bundlePath = path.join(__dirname, 'bundle.js');
+      const ws = browserify({debug: true, entries: path.join(__dirname, './src/main.js')}).bundle().pipe(fs.createWriteStream(bundlePath));
+      ws.on('finish', function () {
+        mocha.addFile(bundlePath);
+
+        const stream = new Readable();
+        stream._read = function noop () {};
+
+        const _log = console.log;
+        console.log = function (...args) {
+          stream.push(util.format.apply(util, args) + '\n');
+        };
+        mocha.run(function (failures) {
+          console.log = _log;
+          stream.push(null);
+        });
+        streamToString(stream.pipe(sourceMapTransformer)).then((output) => {
+          console.log('OUTPUT:' + output + ' ENDDDDD');
+          // expect(output).to.equal(expected);
+          done();
+        });
       });
     });
   });

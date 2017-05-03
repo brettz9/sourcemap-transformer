@@ -1240,7 +1240,7 @@ var _path2 = _interopRequireDefault(_path);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import can't currently be properly browserified: https://github.com/babel/babelify/issues/81
-var fs = __webpack_require__(15); // eslint-disable-line no-var
+var fs = __webpack_require__(15);
 
 
 function fileStr(filePath) {

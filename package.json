@@ -6,7 +6,8 @@
   "scripts": {
     "build": "$(npm bin)/webpack",
     "eslint": "eslint webpack.config.js src/",
-    "btest": "browserify-test --t [ babelify --presets es2015 ] --testemOptions '{\"launch_in_dev\": [\"Node\"], \"launchers\": {\"Node\": {\"command\": \"mocha test/ --compilers js:babel-register\"}}}' --watch test/*",
+    "btest": "browserify-test --t [ babelify --presets es2015 ] --testemOptions '{\"launch_in_dev\": [\"Node\"], \"launchers\": {\"Node\": {\"command\": \"mocha test/ --compilers js:babel-register\"}}}' test/test.js",
+    "browserify2": "browserify --t [ babelify --presets es2015 ]",
     "test": "npm run eslint && npm run build && npm run btest"
   },
   "repository": {

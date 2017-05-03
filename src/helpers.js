@@ -1,5 +1,5 @@
 // import can't currently be properly browserified: https://github.com/babel/babelify/issues/81
-var fs = require('fs'); // eslint-disable-line no-var
+const fs = require('fs');
 import path from 'path';
 
 function fileStr (filePath) {
